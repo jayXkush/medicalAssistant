@@ -33,6 +33,14 @@ LLM-generated Answer
 
 ---
 
+## 📚 Demo Screenshot
+
+![alt text](image-2.png)
+![alt text](image-5.png)
+![alt text](image-3.png)
+
+---
+
 ## 📚 Features
 
 - Upload medical PDFs (notes, books, etc.)

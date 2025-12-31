@@ -18,16 +18,23 @@ def render_chat():
         st.chat_message("user").markdown(user_input)
         st.session_state.messages.append({"role":"user","content":user_input})
 
-        response=ask_question(user_input)
-        if response.status_code==200:
-            data=response.json()
-            answer=data["response"]
-            sources=data.get("sources",[])
-            st.chat_message("assistant").markdown(answer)
-            # if sources:
-            #     st.markdown("📄 **Sources: **")
-            #     for src in sources:
-            #         st.markdown(f"- `{src}`")
-            st.session_state.messages.append({"role":"assistant","content":answer})
-        else:
-            st.error(f"Error: {response.text}")
+        with st.spinner("Thinking..."):
+            response=ask_question(user_input)
+            if response.status_code==200:
+                data=response.json()
+                answer=data.get("response", "I'm sorry, I couldn't generate a response.")
+                sources=data.get("sources",[])
+                st.chat_message("assistant").markdown(answer)
+                # if sources:
+                #     st.markdown("📄 **Sources: **")
+                #     for src in sources:
+                #         st.markdown(f"- `{src}`")
+                st.session_state.messages.append({"role":"assistant","content":answer})
+            else:
+                try:
+                    error_data = response.json()
+                    error_msg = error_data.get("error", response.text)
+                except:
+                    error_msg = response.text
+                st.error(f"Error: {error_msg}")
+                st.session_state.messages.append({"role":"assistant","content":f"Error: {error_msg}"})

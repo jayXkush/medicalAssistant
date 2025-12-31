@@ -21,6 +21,6 @@ def setup_logger(name="MedicalAssistant"):
 logger=setup_logger()
 
 logger.info("RAG prcoess started")
-logger.debug("Bebugging")
+logger.debug("Debugging")
 logger.error("Failed to load")
 logger.critical("Critical message")
